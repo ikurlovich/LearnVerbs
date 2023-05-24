@@ -1,7 +1,8 @@
 import SwiftUI
 
-struct ContentView: View {
-    var ttT = DictionaryView()
+struct Container: View {
+    @StateObject private var vm = ContainerVM()
+    
     var body: some View {
         VStack {
             TabView {
@@ -9,26 +10,26 @@ struct ContentView: View {
                     .tabItem {
                         Label("Начальная страница", systemImage: "house.fill")
                     }
+                
                 DictionaryView()
-                    .badge(ttT.dictionaryHome.count)
+                    .badge(vm.dictionaryHome.count)
                     .tabItem {
                         Label("Глаголы на изучении", systemImage: "character.book.closed.fill")
                     }
+                
                 DictionaryPlusView()
-                    .badge(ttT.anotherDictionary.count)
+                    .badge(vm.anotherDictionary.count)
                     .tabItem {
                         Label("Изученные глаголы", systemImage: "text.book.closed.fill")
                     }
             }
+            .environmentObject(vm)
         }
     }
 }
 
-
-
-
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Container()
     }
 }

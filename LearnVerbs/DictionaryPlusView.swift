@@ -1,15 +1,7 @@
-//
-//  DictionaryPlusView.swift
-//  LearnVerbs
-//
-//  Created by Илья Курлович on 25.05.2023.
-//
-
 import SwiftUI
 
 struct DictionaryPlusView: View {
-    
-    var dView = DictionaryView()
+    @EnvironmentObject private var vm: ContainerVM
     
     var body: some View {
         VStack {
@@ -22,7 +14,7 @@ struct DictionaryPlusView: View {
             }
             .padding(.horizontal)
             
-            List(dView.anotherDictionary.sorted(by: <), id: \.key) { key, value in
+            List(vm.anotherDictionary.sorted(by: <), id: \.key) { key, value in
                 HStack {
                     Text(key)
                     Spacer()
@@ -30,13 +22,8 @@ struct DictionaryPlusView: View {
                 }
             }
         }
-    }
-    func moveKeyValuePair(from source: inout [String: String], to destination: inout [String: String], forKey key: String) {
-        if let value = source[key] {
-            destination[key] = value
-            source.removeValue(forKey: key)
-        }
-    }
+        .toolbarBackground(.visible, for: .tabBar)
+    }    
 }
 
 struct DictionaryPlusView_Previews: PreviewProvider {

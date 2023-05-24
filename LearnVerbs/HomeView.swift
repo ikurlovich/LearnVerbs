@@ -2,26 +2,30 @@ import SwiftUI
 import AVFoundation
 
 struct HomeView: View {
+    @EnvironmentObject private var vm: ContainerVM
+    
     @State private var key = ""
     @State private var value = ""
     @State private var showValue = false
     @State private var showValue2 = false
     @State private var usedKeys: Set<String> = []
-    let synthesizer = AVSpeechSynthesizer()
-    var ddD = DictionaryView()
+    
+    private let synthesizer = AVSpeechSynthesizer()
     
     var body: some View {
         VStack {
-            
-            GroupBox(label:
-                        Text("**Irregular Verbs**").foregroundColor(.accentColor)) {
+            GroupBox {
+                Text("**Irregular Verbs**")
+                    .foregroundColor(.accentColor)
+            } label: {
                 Text(key)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                     .padding()
-                    .onAppear(perform: {
+                    .onAppear {
                         generateRandomPair()
-                    })
+                    }
+                
                 if showValue {
                     Text(value)
                         .font(.largeTitle)
@@ -29,31 +33,33 @@ struct HomeView: View {
                 }
                 
                 HStack {
-                    Button(action: {
-                        speak(text: showValue ? value : key)
-                    }) {
-                        if showValue2 == false {
+                    Button {
+                        speak(showValue ? value : key)
+                    } label: {
+                        if !showValue2 {
                             Text("Озвучить  |")
                         }
                     }
                     .disabled(key.isEmpty)
-                    Button(action: {
+                    
+                    Button {
                         showValue.toggle()
-                        if showValue == false {
+                        if !showValue {
                             generateRandomPair()
                         }
-                    }) {
-                        if showValue2 == false {
+                    } label: {
+                        if !showValue2 {
                             Text(showValue ? "Следующий глагол >" : "Неправильная форма")
                         }
                     }
                 }
-                if usedKeys.count == ddD.dictionaryHome.count {
-                    Button(action: {
+                
+                if usedKeys.count == vm.dictionaryHome.count {
+                    Button {
                         usedKeys.removeAll()
                         generateRandomPair()
                         showValue2 = false
-                    }) {
+                    } label: {
                         Text("Повторить")
                             .padding()
                     }
@@ -64,10 +70,11 @@ struct HomeView: View {
     }
     
     func generateRandomPair() {
-        let availableKeys = ddD.dictionaryHome.keys.filter { !usedKeys.contains($0) }
+        let availableKeys = vm.dictionaryHome.keys.filter { !usedKeys.contains($0) }
+        
         if let randomKey = availableKeys.randomElement() {
             key = randomKey
-            value = ddD.dictionaryHome[randomKey]!
+            value = vm.dictionaryHome[randomKey]!
             usedKeys.insert(randomKey)
         } else {
             key = "Глаголы закончились, повторим?"
@@ -76,7 +83,7 @@ struct HomeView: View {
         }
     }
     
-    func speak(text: String) {
+    func speak(_ text: String) {
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         
