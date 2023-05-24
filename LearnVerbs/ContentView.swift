@@ -1,23 +1,31 @@
-//
-//  ContentView.swift
-//  LearnVerbs
-//
-//  Created by Илья Курлович on 23.05.2023.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    var ttT = DictionaryView()
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            TabView {
+                HomeView()
+                    .tabItem {
+                        Label("Начальная страница", systemImage: "house.fill")
+                    }
+                DictionaryView()
+                    .badge(ttT.dictionaryHome.count)
+                    .tabItem {
+                        Label("Глаголы на изучении", systemImage: "character.book.closed.fill")
+                    }
+                DictionaryPlusView()
+                    .badge(ttT.anotherDictionary.count)
+                    .tabItem {
+                        Label("Изученные глаголы", systemImage: "text.book.closed.fill")
+                    }
+            }
         }
-        .padding()
     }
 }
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

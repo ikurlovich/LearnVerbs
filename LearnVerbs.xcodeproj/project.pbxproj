@@ -11,6 +11,9 @@
 		59783CE02A1D4B6F00D285D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59783CDF2A1D4B6F00D285D6 /* ContentView.swift */; };
 		59783CE22A1D4B7100D285D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59783CE12A1D4B7100D285D6 /* Assets.xcassets */; };
 		59783CE52A1D4B7100D285D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59783CE42A1D4B7100D285D6 /* Preview Assets.xcassets */; };
+		59783CEE2A1D5EE800D285D6 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59783CED2A1D5EE800D285D6 /* HomeView.swift */; };
+		59783CF02A1D60C100D285D6 /* DictionaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59783CEF2A1D60C100D285D6 /* DictionaryView.swift */; };
+		59783CF62A1EB08300D285D6 /* DictionaryPlusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59783CF52A1EB08300D285D6 /* DictionaryPlusView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +22,9 @@
 		59783CDF2A1D4B6F00D285D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		59783CE12A1D4B7100D285D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		59783CE42A1D4B7100D285D6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		59783CED2A1D5EE800D285D6 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		59783CEF2A1D60C100D285D6 /* DictionaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryView.swift; sourceTree = "<group>"; };
+		59783CF52A1EB08300D285D6 /* DictionaryPlusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryPlusView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +59,9 @@
 			children = (
 				59783CDD2A1D4B6F00D285D6 /* LearnVerbsApp.swift */,
 				59783CDF2A1D4B6F00D285D6 /* ContentView.swift */,
+				59783CED2A1D5EE800D285D6 /* HomeView.swift */,
+				59783CEF2A1D60C100D285D6 /* DictionaryView.swift */,
+				59783CF52A1EB08300D285D6 /* DictionaryPlusView.swift */,
 				59783CE12A1D4B7100D285D6 /* Assets.xcassets */,
 				59783CE32A1D4B7100D285D6 /* Preview Content */,
 			);
@@ -137,7 +146,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59783CF02A1D60C100D285D6 /* DictionaryView.swift in Sources */,
+				59783CEE2A1D5EE800D285D6 /* HomeView.swift in Sources */,
 				59783CE02A1D4B6F00D285D6 /* ContentView.swift in Sources */,
+				59783CF62A1EB08300D285D6 /* DictionaryPlusView.swift in Sources */,
 				59783CDE2A1D4B6F00D285D6 /* LearnVerbsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,12 +276,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LearnVerbs/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Q8855SSVY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Learn Verbs";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -282,9 +297,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikurlovich.LearnVerbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -293,12 +311,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LearnVerbs/Preview Content\"";
 				DEVELOPMENT_TEAM = 8Q8855SSVY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Learn Verbs";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -311,9 +332,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ikurlovich.LearnVerbs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
