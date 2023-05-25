@@ -1,6 +1,8 @@
 import SwiftUI
 
 class ContainerVM: ObservableObject {
+    @Published var generator = UISelectionFeedbackGenerator()
+    
     @Published var anotherDictionary = UserDefaults.standard.dictionary(forKey: "anotherDictionary") as? [String: String] ?? [:]
     @Published var dictionaryHome = UserDefaults.standard.dictionary(forKey: "dictionaryHome") as? [String: String] ?? [
         "be": "was/were",
@@ -39,7 +41,24 @@ class ContainerVM: ObservableObject {
         dictionaryHome = [
             "be": "was/were",
             "become": "became",
-            // ...
+            "begin": "began",
+            "buy": "bought",
+            "can": "could",
+            "catch": "caught",
+            "choose": "chose",
+            "come": "came",
+            "cost": "cost",
+            "cut": "cut",
+            "do": "did",
+            "draw": "drew",
+            "dream": "dreamed/dreamt",
+            "drink": "drank",
+            "drive": "drove",
+            "eat": "ate",
+            "fall": "fell",
+            "feed": "fed",
+            "feel": "felt",
+            "fight": "fought"
         ]
         anotherDictionary.removeAll()
     }

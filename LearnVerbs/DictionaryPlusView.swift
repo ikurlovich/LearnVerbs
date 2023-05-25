@@ -19,15 +19,26 @@ struct DictionaryPlusView: View {
                     Text(key)
                     Spacer()
                     Text(value)
+                    Image(systemName: "goforward.plus")
+                        .foregroundColor(.green)
+                        .onTapGesture {
+                            vm.generator.selectionChanged()
+                            vm.moveKeyValuePair(from: &vm.anotherDictionary, to: &vm.dictionaryHome, forKey: key)
+                        }
                 }
             }
         }
+        .onDisappear {
+            UserDefaults.standard.set(vm.anotherDictionary, forKey: "anotherDictionary")
+            UserDefaults.standard.set(vm.dictionaryHome, forKey: "dictionaryHome")
+        }
         .toolbarBackground(.visible, for: .tabBar)
-    }    
+    }
 }
 
 struct DictionaryPlusView_Previews: PreviewProvider {
     static var previews: some View {
         DictionaryPlusView()
+            .environmentObject(ContainerVM())
     }
 }

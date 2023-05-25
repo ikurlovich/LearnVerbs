@@ -8,19 +8,19 @@ struct Container: View {
             TabView {
                 HomeView()
                     .tabItem {
-                        Label("Начальная страница", systemImage: "house.fill")
+                        Label("Главнвая", systemImage: "house.fill")
                     }
                 
                 DictionaryView()
                     .badge(vm.dictionaryHome.count)
                     .tabItem {
-                        Label("Глаголы на изучении", systemImage: "character.book.closed.fill")
+                        Label("На изучении", systemImage: "character.book.closed.fill")
                     }
                 
                 DictionaryPlusView()
                     .badge(vm.anotherDictionary.count)
                     .tabItem {
-                        Label("Изученные глаголы", systemImage: "text.book.closed.fill")
+                        Label("Архив", systemImage: "text.book.closed.fill")
                     }
             }
             .environmentObject(vm)
@@ -31,5 +31,6 @@ struct Container: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Container()
+            .environmentObject(ContainerVM())
     }
 }

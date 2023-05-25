@@ -14,10 +14,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            GroupBox {
-                Text("**Irregular Verbs**")
-                    .foregroundColor(.accentColor)
-            } label: {
+            GroupBox(label: Text("**Irregular Verbs**").foregroundColor(.accentColor)) {
                 Text(key)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
@@ -35,6 +32,7 @@ struct HomeView: View {
                 HStack {
                     Button {
                         speak(showValue ? value : key)
+                        vm.generator.selectionChanged()
                     } label: {
                         if !showValue2 {
                             Text("Озвучить  |")
@@ -43,6 +41,7 @@ struct HomeView: View {
                     .disabled(key.isEmpty)
                     
                     Button {
+                        vm.generator.selectionChanged()
                         showValue.toggle()
                         if !showValue {
                             generateRandomPair()
@@ -54,18 +53,29 @@ struct HomeView: View {
                     }
                 }
                 
-                if usedKeys.count == vm.dictionaryHome.count {
-                    Button {
-                        usedKeys.removeAll()
-                        generateRandomPair()
-                        showValue2 = false
-                    } label: {
-                        Text("Повторить")
-                            .padding()
-                    }
-                }
             }
             .padding()
+            
+                Button {
+                    vm.generator.selectionChanged()
+                    usedKeys.removeAll()
+                    generateRandomPair()
+                    showValue2 = false
+                } label: {
+                    Text("Рестарт")
+                        .foregroundColor(.white)
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 10)
+                                .fill(Color.accentColor)
+                        }
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.accentColor, lineWidth: 2)
+                        }
+                        .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
+                        .padding()
+                }
         }
     }
     
@@ -94,5 +104,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(ContainerVM())
     }
 }

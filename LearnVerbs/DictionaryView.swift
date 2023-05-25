@@ -1,8 +1,8 @@
 import SwiftUI
+import AudioToolbox
 
 struct DictionaryView: View {
     @EnvironmentObject private var vm: ContainerVM
-    
     var body: some View {
         VStack {
             HStack {
@@ -12,24 +12,40 @@ struct DictionaryView: View {
                 Text("Неправильные     ")
                     .font(.headline)
             }
-            .padding(.horizontal)
+            .padding(.top)
             
             List(vm.dictionaryHome.sorted(by: <), id: \.key) { key, value in
                 HStack {
                     Text(key)
                     Spacer()
                     Text(value)
-                    Image(systemName: "goforward.plus")
+                    Image(systemName: "trash.circle")
+                        .foregroundColor(.red)
                         .onTapGesture {
+                            vm.generator.selectionChanged()
                             vm.moveKeyValuePair(from: &vm.dictionaryHome, to: &vm.anotherDictionary, forKey: key)
+                            
                         }
                 }
             }
             
             Button {
                 vm.resetUserDefaults()
+                vm.generator.selectionChanged()
             } label: {
-                Text("Вернуть все глаголы")
+                Text("Вернуть все глаголы из архива")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.accentColor)
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.accentColor, lineWidth: 2)
+                    }
+                    .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
+                
             }
             .padding()
         }
@@ -45,5 +61,6 @@ struct DictionaryView: View {
 struct DictionaryView_Previews: PreviewProvider {
     static var previews: some View {
         DictionaryView()
+            .environmentObject(ContainerVM())
     }
 }
