@@ -18,7 +18,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            GroupBox(label: Text("**Irregular Verbs**").foregroundColor(.accentColor)) {
+            GroupBox(label: Text("**Неправильные глаголы**").foregroundColor(.accentColor)) {
                 Text(key)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
@@ -65,7 +65,7 @@ struct HomeView: View {
                         }
                     } label: {
                         if !showValue2 {
-                            Text(showValue ? "Next >" : "Irregular")
+                            Text(showValue ? "Следующий >" : "Неправильные")
                                 .foregroundColor(.white)
                                 .padding()
                                 .background {

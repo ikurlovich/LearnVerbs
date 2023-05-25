@@ -29,8 +29,9 @@ struct DictionaryView: View {
                 }
                 
                 if vm.dictionaryHome.count == 0 {
-                    Text("Здесь пока пусто")
+                    Text("Здесь пока пусто\n🤓")
                         .font(.largeTitle)
+                        .multilineTextAlignment(.center)
                 }
             
             Button {
