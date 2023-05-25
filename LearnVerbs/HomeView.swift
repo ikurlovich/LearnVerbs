@@ -8,7 +8,11 @@ struct HomeView: View {
     @State private var value = ""
     @State private var showValue = false
     @State private var showValue2 = false
+    @State private var showValue3 = true
     @State private var usedKeys: Set<String> = []
+    
+    @State private var speed = 0.1
+    @State private var isEditing = false
     
     private let synthesizer = AVSpeechSynthesizer()
     
@@ -18,15 +22,16 @@ struct HomeView: View {
                 Text(key)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
-                    .padding()
+                    .padding(.vertical)
                     .onAppear {
                         generateRandomPair()
                     }
                 
                 if showValue {
                     Text(value)
+                        .multilineTextAlignment(.center)
                         .font(.largeTitle)
-                        .padding()
+                        .padding(.vertical)
                 }
                 
                 HStack {
@@ -35,7 +40,19 @@ struct HomeView: View {
                         vm.generator.selectionChanged()
                     } label: {
                         if !showValue2 {
-                            Text("Озвучить  |")
+                            Text("Озвучить 🔊")
+                                .foregroundColor(.white)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.accentColor)
+                                }
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.accentColor, lineWidth: 2)
+                                }
+                                .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
+                            
                         }
                     }
                     .disabled(key.isEmpty)
@@ -48,19 +65,34 @@ struct HomeView: View {
                         }
                     } label: {
                         if !showValue2 {
-                            Text(showValue ? "Следующий глагол >" : "Неправильная форма")
+                            Text(showValue ? "Next >" : "Irregular")
+                                .foregroundColor(.white)
+                                .padding()
+                                .background {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .fill(Color.accentColor)
+                                }
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.accentColor, lineWidth: 2)
+                                }
+                                .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
+                            
                         }
                     }
                 }
                 
             }
             .padding()
-            
+            if !showValue3 {
                 Button {
                     vm.generator.selectionChanged()
                     usedKeys.removeAll()
                     generateRandomPair()
-                    showValue2 = false
+                    if vm.dictionaryHome.count != 0 {
+                        showValue2 = false
+                        showValue3 = true
+                    }
                 } label: {
                     Text("Рестарт")
                         .foregroundColor(.white)
@@ -76,8 +108,20 @@ struct HomeView: View {
                         .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
                         .padding()
                 }
+            }
+            Slider(
+                value: $speed,
+                in: 0...0.5,
+                onEditingChanged: { editing in
+                    isEditing = editing
+                }
+            )
+            .frame(width: 200)
+            Text("Скорость озвуки")
+                .foregroundColor(isEditing ? .red : .blue)
         }
     }
+    
     
     func generateRandomPair() {
         let availableKeys = vm.dictionaryHome.keys.filter { !usedKeys.contains($0) }
@@ -90,13 +134,21 @@ struct HomeView: View {
             key = "Глаголы закончились, повторим?"
             value = ""
             showValue2 = true
+            showValue3 = false
         }
     }
     
     func speak(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        var utterance = AVSpeechUtterance()
         
+        if let textToSpeak = text.split(separator: "(").first {
+            utterance = AVSpeechUtterance(string: String(textToSpeak))
+        } else {
+            utterance = AVSpeechUtterance(string: text)
+        }
+        
+        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        utterance.rate = Float(speed)
         synthesizer.speak(utterance)
     }
 }

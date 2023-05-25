@@ -5,28 +5,53 @@ struct DictionaryPlusView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text("     Правильные")
+            VStack {
+                Text("Архив глаголов")
                     .font(.headline)
-                Spacer()
-                Text("Неправильные     ")
-                    .font(.headline)
+                Text("Base form - past simple - past participle")
             }
-            .padding(.horizontal)
             
-            List(vm.anotherDictionary.sorted(by: <), id: \.key) { key, value in
-                HStack {
-                    Text(key)
-                    Spacer()
-                    Text(value)
-                    Image(systemName: "goforward.plus")
-                        .foregroundColor(.green)
-                        .onTapGesture {
-                            vm.generator.selectionChanged()
-                            vm.moveKeyValuePair(from: &vm.anotherDictionary, to: &vm.dictionaryHome, forKey: key)
-                        }
+                List(vm.anotherDictionary.sorted(by: <), id: \.key) { key, value in
+                    HStack {
+                        
+                        Text(key)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        Text(value)
+                            .multilineTextAlignment(.trailing)
+                        Image(systemName: "goforward.plus")
+                            .foregroundColor(.green)
+                            .onTapGesture {
+                                vm.generator.selectionChanged()
+                                vm.moveKeyValuePair(from: &vm.anotherDictionary, to: &vm.dictionaryHome, forKey: key)
+                            }
+                    }
                 }
+
+            if vm.anotherDictionary.count == 0 {
+                Text("Здесь пока пусто")
+                    .font(.largeTitle)
             }
+            
+            Button {
+                vm.resetUserDefaults2()
+                vm.generator.selectionChanged()
+            } label: {
+                Text("Перенести все глаголы в архив")
+                    .foregroundColor(.white)
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.accentColor)
+                    }
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.accentColor, lineWidth: 2)
+                    }
+                    .shadow(color: .accentColor, radius: 5, x: 0, y: 2)
+                
+            }
+            .padding()
         }
         .onDisappear {
             UserDefaults.standard.set(vm.anotherDictionary, forKey: "anotherDictionary")

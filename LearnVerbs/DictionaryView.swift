@@ -5,29 +5,33 @@ struct DictionaryView: View {
     @EnvironmentObject private var vm: ContainerVM
     var body: some View {
         VStack {
-            HStack {
-                Text("     Правильные")
+            VStack {
+                Text("Глаголы на изучении")
                     .font(.headline)
-                Spacer()
-                Text("Неправильные     ")
-                    .font(.headline)
+                Text("Base form - past simple - past participle")
             }
-            .padding(.top)
-            
-            List(vm.dictionaryHome.sorted(by: <), id: \.key) { key, value in
-                HStack {
-                    Text(key)
-                    Spacer()
-                    Text(value)
-                    Image(systemName: "trash.circle")
-                        .foregroundColor(.red)
-                        .onTapGesture {
-                            vm.generator.selectionChanged()
-                            vm.moveKeyValuePair(from: &vm.dictionaryHome, to: &vm.anotherDictionary, forKey: key)
-                            
-                        }
+
+                List(vm.dictionaryHome.sorted(by: <), id: \.key) { key, value in
+                    HStack {
+                        Text(key)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                        Text(value)
+                            .multilineTextAlignment(.trailing)
+                        Image(systemName: "trash.circle")
+                            .foregroundColor(.red)
+                            .onTapGesture {
+                                vm.generator.selectionChanged()
+                                vm.moveKeyValuePair(from: &vm.dictionaryHome, to: &vm.anotherDictionary, forKey: key)
+                                
+                            }
+                    }
                 }
-            }
+                
+                if vm.dictionaryHome.count == 0 {
+                    Text("Здесь пока пусто")
+                        .font(.largeTitle)
+                }
             
             Button {
                 vm.resetUserDefaults()
